@@ -18,6 +18,7 @@ end
   end
 
   def edit
+    authorize! :manage, @book
   end
 
   def create
@@ -42,6 +43,6 @@ end
     end
 
     def book_params
-      params.require(:book).permit(:name, :author, :description, :price, :availability)
-    end
+      params.require(:book).permit(:name, :author, :description, :price, :availability, :image, :resource)
+end
 end
