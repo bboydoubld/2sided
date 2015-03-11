@@ -4,9 +4,8 @@ class BooksController < ApplicationController
   respond_to :html
 
   def index
-    @books = Book.all
-    respond_with(@books)
-  end
+  @books = Book.where(availability: true)
+end
 
   def show
     respond_with(@book)
