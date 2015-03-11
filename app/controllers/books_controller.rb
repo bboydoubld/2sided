@@ -5,8 +5,9 @@ class BooksController < ApplicationController
   respond_to :html
 
   def index
-  @books = Book.where(availability: true)
-end
+    @books = Book.where(availability: true)
+    respond_with(@books)
+  end
 
   def show
     respond_with(@book)
@@ -28,21 +29,23 @@ end
   end
 
   def update
+    authorize! :manage, @book
     @book.update(book_params)
     respond_with(@book)
   end
 
   def destroy
+    authorize! :manage, @book
     @book.destroy
     respond_with(@book)
   end
 
   private
     def set_book
-      @book = Book.find(params[:id])
+      @book = Book.friendly.find(params[:id])
     end
 
     def book_params
       params.require(:book).permit(:name, :author, :description, :price, :availability, :image, :resource)
-end
+    end
 end
